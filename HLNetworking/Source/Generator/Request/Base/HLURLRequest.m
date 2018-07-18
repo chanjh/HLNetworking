@@ -157,6 +157,23 @@
 }
 
 #pragma mark - process
+- (__kindof HLURLRequest *)startWithSuccessHandle:(HLSuccessBlock)success
+                                   progressHandle:(nonnull HLProgressBlock)progress
+                                    failureHandle:(nonnull HLFailureBlock)failure{
+    self.successHandler = success;
+    self.progressHandler = progress;
+    self.failureHandler = failure;
+    [HLNetworkManager send:self];
+    return self;
+}
+
+- (__kindof HLURLRequest *)startWithSuccessHandle:(HLSuccessBlock)success
+                           failureHandle:(HLFailureBlock)failure{
+    self.successHandler = success;
+    self.failureHandler = failure;
+    [HLNetworkManager send:self];
+    return self;
+}
 // 开启API 请求
 - (__kindof HLURLRequest *)start {
     [HLNetworkManager send:self];
