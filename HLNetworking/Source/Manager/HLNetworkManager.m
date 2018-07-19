@@ -397,7 +397,14 @@ static dispatch_queue_t qkhl_network_task_queue() {
     if ([request isKindOfClass:[HLAPIRequest class]]) {
         HLAPIRequest *tmpRequest = (HLAPIRequest *)request;
         if (tmpRequest.objReformerDelegate) {
-            resultObject = [tmpRequest.objReformerDelegate reformerObject:resultObject andError:netError atRequest:tmpRequest];
+            if([tmpRequest.objReformerDelegate respondsToSelector:@selector(reformerObject:andError:atRequest:)]){
+                resultObject = [tmpRequest.objReformerDelegate reformerObject:resultObject andError:netError atRequest:tmpRequest];
+            }
+            if([tmpRequest.objReformerDelegate respondsToSelector:@selector(modelingFormJSONResponseObject:)]){
+                tmpRequest.modeledResponseObject = [tmpRequest.objReformerDelegate modelingFormJSONResponseObject:resultObject];
+            }else{
+                tmpRequest.modeledResponseObject = @[];
+            }
         }
     }
     

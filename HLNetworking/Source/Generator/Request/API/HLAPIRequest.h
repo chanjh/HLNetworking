@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - 用于转换回调结果的代理
 @protocol HLReformerDelegate <NSObject>
-@required
+@optional
 /**
  一般用来进行JSON -> Model 数据的转换工作。返回的id，如果没有error，则为转换成功后的Model数据。如果有error， 则直接返回传参中的responseObject
  
@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return 整理过后的请求数据
  */
 - (nullable id)reformerObject:(id)responseObject andError:(NSError * _Nullable)error atRequest:(HLAPIRequest *)request;
+- (NSArray *)modelingFormJSONResponseObject:(id)JSONResponseObject;
 @end
 
 @interface HLAPIRequest : HLURLRequest
@@ -33,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSDictionary<NSString *, NSObject *> *parameters;
 @property (nonatomic, copy, readonly) NSDictionary<NSString *, NSString *> *header;
 @property (nonatomic, copy, readonly) NSSet *accpetContentTypes;
+@property (nonatomic, copy) NSArray *modeledResponseObject;
 
 #pragma mark - parameters append method
 /**
