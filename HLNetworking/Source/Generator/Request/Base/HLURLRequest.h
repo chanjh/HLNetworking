@@ -55,12 +55,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - process
 // 开启API 请求
-- (__kindof HLURLRequest *)startWithSuccessHandle:(HLSuccessBlock)success
-                                   progressHandle:(HLProgressBlock)progress
-                                    failureHandle:(HLFailureBlock)failure;
+- (__kindof HLURLRequest *)startWithSuccessHandler:(HLSuccessBlock)success
+                                   progressHandler:(HLProgressBlock)progress
+                                    failureHandler:(HLFailureBlock)failure;
 // 开启API 请求
-- (__kindof HLURLRequest *)startWithSuccessHandle:(HLSuccessBlock)success
-                                    failureHandle:(HLFailureBlock)failure;
+- (__kindof HLURLRequest *)startWithSuccessHandler:(HLSuccessBlock)success
+                                    failureHandler:(HLFailureBlock)failure;
 // 开启API 请求
 - (__kindof HLURLRequest *)start;
 // 取消API 请求

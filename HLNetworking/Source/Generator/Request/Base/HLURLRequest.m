@@ -157,9 +157,9 @@
 }
 
 #pragma mark - process
-- (__kindof HLURLRequest *)startWithSuccessHandle:(HLSuccessBlock)success
-                                   progressHandle:(nonnull HLProgressBlock)progress
-                                    failureHandle:(nonnull HLFailureBlock)failure{
+- (__kindof HLURLRequest *)startWithSuccessHandler:(HLSuccessBlock)success
+                                   progressHandler:(nonnull HLProgressBlock)progress
+                                    failureHandler:(nonnull HLFailureBlock)failure{
     self.successHandler = success;
     self.progressHandler = progress;
     self.failureHandler = failure;
@@ -167,8 +167,8 @@
     return self;
 }
 
-- (__kindof HLURLRequest *)startWithSuccessHandle:(HLSuccessBlock)success
-                           failureHandle:(HLFailureBlock)failure{
+- (__kindof HLURLRequest *)startWithSuccessHandler:(HLSuccessBlock)success
+                           failureHandler:(HLFailureBlock)failure{
     self.successHandler = success;
     self.failureHandler = failure;
     [HLNetworkManager send:self];
