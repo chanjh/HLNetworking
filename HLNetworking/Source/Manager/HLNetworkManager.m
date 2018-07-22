@@ -305,7 +305,7 @@ static dispatch_queue_t qkhl_network_task_queue() {
     
     // 定义进度block
     @hl_weakify(self)
-    void (^progressBlock)(NSProgress *proc) = ^(NSProgress *proc) {
+    void (^progressBlock)(__kindof HLURLRequest *request, NSProgress *proc) = ^(__kindof HLURLRequest *request, NSProgress *proc) {
         if (proc.totalUnitCount <= 0) return;
         dispatch_async_main(self.config.request.callbackQueue, ^{
             for (id<HLNetworkResponseDelegate> obj in self.responseObservers) {
@@ -396,6 +396,7 @@ static dispatch_queue_t qkhl_network_task_queue() {
     
     if ([request isKindOfClass:[HLAPIRequest class]]) {
         HLAPIRequest *tmpRequest = (HLAPIRequest *)request;
+        tmpRequest.rawResponseObj = resultObject;
         if (tmpRequest.objReformerDelegate) {
             if([tmpRequest.objReformerDelegate respondsToSelector:@selector(reformerObject:andError:atRequest:)]){
                 resultObject = [tmpRequest.objReformerDelegate reformerObject:resultObject andError:netError atRequest:tmpRequest];
@@ -435,14 +436,14 @@ static dispatch_queue_t qkhl_network_task_queue() {
     if (netError) {
         if ([request failureHandler]) {
             dispatch_async_main(self.config.request.callbackQueue, ^{
-                request.failureHandler(netError);
+                request.failureHandler(request, netError);
                 request.failureHandler = nil;
             });
         }
     } else {
         if ([request successHandler]) {
             dispatch_async_main(self.config.request.callbackQueue, ^{
-                request.successHandler(resultObject);
+                request.successHandler(request, request);
                 request.successHandler = nil;
             });
         }

@@ -10,6 +10,7 @@
 #define HLNetworkConst_h
 @protocol HLMultipartFormDataProtocol;
 @class HLDebugMessage;
+@class HLURLRequest;
 
 // 网络请求类型
 typedef NS_ENUM(NSUInteger, HLRequestTaskType) {
@@ -59,11 +60,11 @@ typedef NS_ENUM(NSUInteger, HLReachabilityStatus) {
 
 // 定义的Block
 // 请求结果回调
-typedef void(^HLSuccessBlock)(id __nullable responseObj);
+typedef void(^HLSuccessBlock)(__kindof HLURLRequest *request, id __nullable responseObj);
 // 请求失败回调
-typedef void(^HLFailureBlock)(NSError * __nullable error);
+typedef void(^HLFailureBlock)(__kindof HLURLRequest *request, NSError * __nullable error);
 // 请求进度回调
-typedef void(^HLProgressBlock)(NSProgress * __nullable progress);
+typedef void(^HLProgressBlock)(__kindof HLURLRequest *request, NSProgress * __nullable progress);
 // formData拼接回调
 typedef void(^HLRequestConstructingBodyBlock)(id<HLMultipartFormDataProtocol> __nullable formData);
 // debug回调

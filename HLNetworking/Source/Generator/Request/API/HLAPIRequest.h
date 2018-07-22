@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSDictionary<NSString *, NSString *> *header;
 @property (nonatomic, copy, readonly) NSSet *accpetContentTypes;
 @property (nonatomic, copy) NSArray *modeledResponseObject;
+@property (nonatomic, strong, nullable) id rawResponseObj;
 
 #pragma mark - parameters append method
 /**

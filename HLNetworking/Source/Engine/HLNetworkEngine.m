@@ -187,10 +187,10 @@
         if (progress.totalUnitCount <= 0) return;
         dispatch_async_main(config.request.callbackQueue, ^{
             if (progressCallBack) {
-                progressCallBack(progress);
+                progressCallBack(requestObject, progress);
             }
             if (requestObject.progressHandler) {
-                requestObject.progressHandler(progress);
+                requestObject.progressHandler(requestObject, progress);
             }
         });
     };
