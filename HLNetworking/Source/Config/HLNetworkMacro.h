@@ -8,7 +8,7 @@
 
 #ifndef HLNetworkMacro_h
 #define HLNetworkMacro_h
-
+#import <Foundation/Foundation.h>
 static inline BOOL IsEmptyValue(id thing) {
     return thing == nil
     || ([thing respondsToSelector:@selector(length)]
