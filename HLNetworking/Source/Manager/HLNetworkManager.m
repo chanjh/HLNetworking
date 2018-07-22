@@ -443,7 +443,7 @@ static dispatch_queue_t qkhl_network_task_queue() {
     } else {
         if ([request successHandler]) {
             dispatch_async_main(self.config.request.callbackQueue, ^{
-                request.successHandler(request, request);
+                request.successHandler(request, resultObject);
                 request.successHandler = nil;
             });
         }
