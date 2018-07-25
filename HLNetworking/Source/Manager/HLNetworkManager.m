@@ -435,8 +435,9 @@ static dispatch_queue_t qkhl_network_task_queue() {
     }
     
     if([request.interceptor respondsToSelector:@selector(interceptErrorForApiRequest:)]){
-        if([request.interceptor interceptErrorForApiRequest:request]){
-            netError = [request.interceptor interceptErrorForApiRequest:request];
+        NSError *error = [request.interceptor interceptErrorForApiRequest:request];
+        if(error){
+            netError = error;
         }
     }
     
