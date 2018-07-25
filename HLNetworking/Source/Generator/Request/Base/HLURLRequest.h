@@ -52,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (__kindof HLURLRequest *(^)(NSURLRequestCachePolicy requestCachePolicy))setCachePolicy;
 // HTTP 请求超时的时间，默认为15秒
 - (__kindof HLURLRequest *(^)(NSTimeInterval requestTimeoutInterval))setTimeout;
+NS_ASSUME_NONNULL_END
 
 #pragma mark - process
 // 开启API 请求
@@ -61,6 +62,8 @@ NS_ASSUME_NONNULL_BEGIN
 // 开启API 请求
 - (__kindof HLURLRequest *)startWithSuccessHandler:(HLSuccessBlock)success
                                     failureHandler:(HLFailureBlock)failure;
+
+NS_ASSUME_NONNULL_BEGIN
 // 开启API 请求
 - (__kindof HLURLRequest *)start;
 // 取消API 请求

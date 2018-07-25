@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "HLNetworkManager.h"
+#import "HLNetworkConfig.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +18,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [[HLNetworkManager sharedManager] setupConfig:^(HLNetworkConfig * _Nonnull config) {
+        config.request.baseURL = @"https://api.github.com";
+    }];
     return YES;
 }
 

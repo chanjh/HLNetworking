@@ -40,19 +40,19 @@
 
 - (HLTaskRequest *)task1 {
     if (!_task1) {
-        _task1 = [HLTaskRequest request]
-        .setDelegate(self)
-        .setFilePath([[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"minion_01.mp4"])
-        .setCustomURL(@"http://120.25.226.186:32812/resources/videos/minion_01.mp4")
-        .progress(^(NSProgress *proc){
-            NSLog(@"\n进度=====\n当前进度：%@", proc);
-        })
-        .success(^(id response){
-            NSLog(@"\n完成=====\n对象：%@", response);
-        })
-        .failure(^(NSError *error){
-            NSLog(@"\n失败=====\n错误：%@", error);
-        });
+//        _task1 = [HLTaskRequest request]
+//        .setDelegate(self)
+//        .setFilePath([[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"minion_01.mp4"])
+//        .setCustomURL(@"http://120.25.226.186:32812/resources/videos/minion_01.mp4")
+//        .progress(^(NSProgress *proc){
+//            NSLog(@"\n进度=====\n当前进度：%@", proc);
+//        })
+//        .success(^(id response){
+//            NSLog(@"\n完成=====\n对象：%@", response);
+//        })
+//        .failure(^(NSError *error){
+//            NSLog(@"\n失败=====\n错误：%@", error);
+//        });
     }
     return _task1;
 }
@@ -86,11 +86,11 @@
 }
 
 - (void)testHome {
-    [HLAPICenter.home.success(^(id responce) {
-        self.model = responce;
-    }).failure(^(NSError *obj){
-        NSLog(@"----%@", obj);
-    }) start];
+//    [HLAPICenter.home.success(^(id responce) {
+//        self.model = responce;
+//    }).failure(^(NSError *obj){
+//        NSLog(@"----%@", obj);
+//    }) start];
 }
 
 - (void)testButton {
@@ -128,78 +128,78 @@
     [group start];
 }
 
-- (void)testAPI {
-    __block int i = 0;
-    HLRequestGroup *group = [HLRequestGroup groupWithMode:HLRequestGroupModeChain];
-    group.delegate = self;
-    group.maxRequestCount = 1;
-    
-    self.api1 = [HLAPIRequest request]
-    .setMethod(GET)
-    .setPath(@"user-agent")
-    .setDelegate(self)
-    .setObjReformerDelegate(self)
-    .success(^(id obj) {
-        NSLog(@"\napi 1 --- 已回调 %@ \n----", obj);
-        NSLog(@"%d", i++);
-        self.api4.setParams(@{@"show_env": @(i)});
-    });
-    
-    self.api2 = [HLAPIRequest request]
-    .setMethod(HEAD)
-    .setPath(@"headers")
-    .setDelegate(self)
-    .success(^(id obj) {
-        NSLog(@"\napi 2 --- 已回调 %@ \n----", obj);
-        NSLog(@"%d", i++);
-    });
-    
-    self.api3 = [HLAPIRequest request]
-    .setMethod(GET)
-    .setPath(@"get")
-    .setParams(@{@"a": @(i)})
-    .setDelegate(self)
-    .success(^(id obj) {
-        NSLog(@"\napi 3 --- 已回调 %@ \n----", obj);
-        NSLog(@"%d", i++);
-    });
-    
-    self.api4 = [HLAPIRequest request]
-    .setMethod(POST)
-    .setPath(@"post")
-    .setDelegate(self)
-    .success(^(id  obj) {
-        NSLog(@"\napi 4 --- 已回调 %@ \n----", obj);
-        NSLog(@"%d", i++);
-    });
-    
-    self.api5 = [HLAPIRequest request]
-    .setMethod(PATCH)
-    .setPath(@"patch")
-    .setDelegate(self)
-    .success(^(id obj) {
-        NSLog(@"\napi 5 --- 已回调 %@ \n----", obj);
-        NSLog(@"%d", i++);
-    });
-    
-    self.api6 = [HLAPIRequest request]
-    .setMethod(PUT)
-    .setPath(@"put")
-    .setDelegate(self)
-    .success(^(id obj) {
-        NSLog(@"\napi 6 --- 已回调 %@ \n----",obj);
-        NSLog(@"%d", i++);
-    });
-    
-    self.api7 = [HLAPIRequest request]
-    .setMethod(DELETE)
-    .setPath(@"delete")
-    .setDelegate(self)
-    .success(^(id obj) {
-        NSLog(@"\napi 7 --- 已回调 %@ \n----",obj);
-        NSLog(@"%d", i++);
-    });
-    
+//- (void)testAPI {
+//    __block int i = 0;
+//    HLRequestGroup *group = [HLRequestGroup groupWithMode:HLRequestGroupModeChain];
+//    group.delegate = self;
+//    group.maxRequestCount = 1;
+//
+//    self.api1 = [HLAPIRequest request]
+//    .setMethod(GET)
+//    .setPath(@"user-agent")
+//    .setDelegate(self)
+//    .setObjReformerDelegate(self)
+//    .success(^(id obj) {
+//        NSLog(@"\napi 1 --- 已回调 %@ \n----", obj);
+//        NSLog(@"%d", i++);
+//        self.api4.setParams(@{@"show_env": @(i)});
+//    });
+//
+//    self.api2 = [HLAPIRequest request]
+//    .setMethod(HEAD)
+//    .setPath(@"headers")
+//    .setDelegate(self)
+//    .success(^(id obj) {
+//        NSLog(@"\napi 2 --- 已回调 %@ \n----", obj);
+//        NSLog(@"%d", i++);
+//    });
+//
+//    self.api3 = [HLAPIRequest request]
+//    .setMethod(GET)
+//    .setPath(@"get")
+//    .setParams(@{@"a": @(i)})
+//    .setDelegate(self)
+//    .success(^(id obj) {
+//        NSLog(@"\napi 3 --- 已回调 %@ \n----", obj);
+//        NSLog(@"%d", i++);
+//    });
+//
+//    self.api4 = [HLAPIRequest request]
+//    .setMethod(POST)
+//    .setPath(@"post")
+//    .setDelegate(self)
+//    .success(^(id  obj) {
+//        NSLog(@"\napi 4 --- 已回调 %@ \n----", obj);
+//        NSLog(@"%d", i++);
+//    });
+//
+//    self.api5 = [HLAPIRequest request]
+//    .setMethod(PATCH)
+//    .setPath(@"patch")
+//    .setDelegate(self)
+//    .success(^(id obj) {
+//        NSLog(@"\napi 5 --- 已回调 %@ \n----", obj);
+//        NSLog(@"%d", i++);
+//    });
+//
+//    self.api6 = [HLAPIRequest request]
+//    .setMethod(PUT)
+//    .setPath(@"put")
+//    .setDelegate(self)
+//    .success(^(id obj) {
+//        NSLog(@"\napi 6 --- 已回调 %@ \n----",obj);
+//        NSLog(@"%d", i++);
+//    });
+//
+//    self.api7 = [HLAPIRequest request]
+//    .setMethod(DELETE)
+//    .setPath(@"delete")
+//    .setDelegate(self)
+//    .success(^(id obj) {
+//        NSLog(@"\napi 7 --- 已回调 %@ \n----",obj);
+//        NSLog(@"%d", i++);
+//    });
+
 //    [self.api1 start];
 //    [self.api2 start];
 //    [self.api3 start];
@@ -207,12 +207,12 @@
 //    [self.api5 start];
 //    [self.api6 start];
 //    [self.api7 start];
-    [group addRequests:@[self.api1, self.api2, self.api3, self.api4, self.api5, self.api6, self.api7]];
-    [group start];
-    
+//    [group addRequests:@[self.api1, self.api2, self.api3, self.api4, self.api5, self.api6, self.api7]];
+//    [group start];
+
 //    [asyncBatch addAPIs:[NSSet setWithObjects:self.api1, self.api2, self.api3, self.api4, self.api5, self.api6, self.api7, nil]];
 //    [asyncBatch start];
-}
+//}
 
 - (void)requestGroupAllDidFinished:(__kindof HLRequestGroup *)apiGroup {
     NSLog(@"apiGroupAllDidFinished");
@@ -227,15 +227,15 @@
 }
 
 #pragma mark - HLRequestDelegate
-- (void)requestWillBeSent:(HLURLRequest *)request {
-    NSString *newToken = @"获取了新token";
-    ((HLAPIRequest *)request)
-    .addParams(@{@"token": newToken})
-    .success(^(id obj) {
-        NSLog(@"\napi x --- 已回调 %@ \n----", obj);
-    });
-    NSLog(@"\n%@---willBeSent---", request.hashKey);
-}
+//- (void)requestWillBeSent:(HLURLRequest *)request {
+//    NSString *newToken = @"获取了新token";
+//    ((HLAPIRequest *)request)
+//    .addParams(@{@"token": newToken})
+//    .success(^(id obj) {
+//        NSLog(@"\napi x --- 已回调 %@ \n----", obj);
+//    });
+//    NSLog(@"\n%@---willBeSent---", request.hashKey);
+//}
 
 - (void)requestDidSent:(HLURLRequest *)request {
     NSLog(@"\n%@---didSent---", request.hashKey);
