@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HLNetworkConst.h"
+#import "HLInterceptorProtocol.h"
 @class HLURLRequest;
 @class HLSecurityPolicyConfig;
 @protocol HLMultipartFormDataProtocol;
@@ -38,6 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)new NS_UNAVAILABLE;
 
 #pragma mark - parameters append method
+// 设置HLAPI的 拦截器
+- (__kindof HLURLRequest *(^)(id<HLInterceptorProtocol> _Nullable interceptor))setInterceptor;
 // 设置HLAPI的requestDelegate
 - (__kindof HLURLRequest *(^)(id<HLURLRequestDelegate> _Nullable delegate))setDelegate;
 // 设置API的baseURL，该参数会覆盖config中的baseURL

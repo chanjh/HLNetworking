@@ -64,6 +64,7 @@
 		0D71B6BD210859E9007E68BA /* GithubSearchAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GithubSearchAPI.h; sourceTree = "<group>"; };
 		0D71B6BE210859E9007E68BA /* GithubSearchAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GithubSearchAPI.m; sourceTree = "<group>"; };
 		0D71B6C021085D05007E68BA /* HLDemoSearchProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLDemoSearchProtocol.h; sourceTree = "<group>"; };
+		0D71B6C421086242007E68BA /* HLInterceptorProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLInterceptorProtocol.h; sourceTree = "<group>"; };
 		0E4E388C48FBF73DFFCF16AD /* libPods-HLNetworkingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HLNetworkingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D14D0F53EFCAA4AF53EEE33 /* Pods-HLNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HLNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-HLNetworking/Pods-HLNetworking.release.xcconfig"; sourceTree = "<group>"; };
 		7181179E3FED125878C5BA34 /* Pods-HLNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HLNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HLNetworking/Pods-HLNetworking.debug.xcconfig"; sourceTree = "<group>"; };
@@ -174,6 +175,14 @@
 			name = Api;
 			sourceTree = "<group>";
 		};
+		0D71B6C52108624A007E68BA /* Interceptor */ = {
+			isa = PBXGroup;
+			children = (
+				0D71B6C421086242007E68BA /* HLInterceptorProtocol.h */,
+			);
+			path = Interceptor;
+			sourceTree = "<group>";
+		};
 		8A8E0E7C6E12EA9397609AAC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +246,7 @@
 		CF3627641D9368CD00C26AAF /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				0D71B6C52108624A007E68BA /* Interceptor */,
 				CF6BAB1D1E35DDE3003ECA28 /* Manager */,
 				CF6BAB181E35DC37003ECA28 /* Engine */,
 				CFDCF72A1D9C261B00DE1C8E /* Config */,

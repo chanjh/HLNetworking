@@ -10,6 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface HLURLRequest ()
 @property (nonatomic, weak, nullable) id<HLURLRequestDelegate> delegate;
+@property (nonatomic, weak, nullable) id<HLInterceptorProtocol> interceptor;
 @property (nonatomic, copy) NSString *cURL;
 @property (nonatomic, copy) NSString *baseURL;
 @property (nonatomic, copy) NSString *path;

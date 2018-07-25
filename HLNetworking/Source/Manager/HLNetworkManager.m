@@ -400,6 +400,7 @@ static dispatch_queue_t qkhl_network_task_queue() {
         if (tmpRequest.objReformerDelegate) {
             if([tmpRequest.objReformerDelegate respondsToSelector:@selector(reformerObject:andError:atRequest:)]){
                 resultObject = [tmpRequest.objReformerDelegate reformerObject:resultObject andError:netError atRequest:tmpRequest];
+                tmpRequest.reformedObj = resultObject;
             }
             if([tmpRequest.objReformerDelegate respondsToSelector:@selector(modelingFormJSONResponseObject:)]){
                 tmpRequest.modeledResponseObject = [tmpRequest.objReformerDelegate modelingFormJSONResponseObject:resultObject];
@@ -431,6 +432,12 @@ static dispatch_queue_t qkhl_network_task_queue() {
             msgDictionary = [msg toDictionary];
         }
         [HLNetworkLogger addLogInfoWithDictionary:msgDictionary];
+    }
+    
+    if([request.interceptor respondsToSelector:@selector(interceptErrorForApiRequest:)]){
+        if([request.interceptor interceptErrorForApiRequest:request]){
+            netError = [request.interceptor interceptErrorForApiRequest:request];
+        }
     }
     
     if (netError) {

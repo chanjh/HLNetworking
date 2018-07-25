@@ -50,6 +50,12 @@
 }
 
 #pragma mark - parameters append method
+- (__kindof HLURLRequest *(^)(id<HLInterceptorProtocol> _Nullable))setInterceptor{
+    return ^HLURLRequest* (id<HLInterceptorProtocol> interceptor) {
+        self.interceptor = interceptor;
+        return self;
+    };
+}
 // 设置HLAPI的requestDelegate
 - (__kindof HLURLRequest *(^)(id<HLURLRequestDelegate> delegate))setDelegate {
     return ^HLURLRequest* (id<HLURLRequestDelegate> delegate) {
