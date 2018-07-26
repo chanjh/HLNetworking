@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   spec.resource  = "HLNetworking/Source/Logger/iPhoneTypeDefine.plist"
 
   spec.subspec 'Core' do |core|
-    core.source_files = 'HLNetworking/Source/HLNetworking.h', 'HLNetworking/Source/**/**/*.{h,m}'
+    core.source_files = 'HLNetworking/Source/HLNetworking.h', 'HLNetworking/Source/Interceptor/**/*.{h,m}', 'HLNetworking/Source/Manager/**/*.{h,m}', 'HLNetworking/Source/Engine/**/*.{h,m}', 'HLNetworking/Source/Logger/**/*.{h,m}', 'HLNetworking/Source/Config/**/*.{h,m}'
     core.dependency 'AFNetworking', '~> 3.1.0'
   end
 
