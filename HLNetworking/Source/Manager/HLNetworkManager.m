@@ -397,15 +397,14 @@ static dispatch_queue_t qkhl_network_task_queue() {
     if ([request isKindOfClass:[HLAPIRequest class]]) {
         HLAPIRequest *tmpRequest = (HLAPIRequest *)request;
         tmpRequest.rawResponseObj = resultObject;
-        if (tmpRequest.objReformerDelegate) {
+        tmpRequest.reformedObj = resultObject;
+        tmpRequest.modeledResponseObject = @[];
+        if (tmpRequest.objReformerDelegate && resultObject) { // resultObject 为空时，不会经过 reformer
             if([tmpRequest.objReformerDelegate respondsToSelector:@selector(reformerObject:andError:atRequest:)]){
-                resultObject = [tmpRequest.objReformerDelegate reformerObject:resultObject andError:netError atRequest:tmpRequest];
-                tmpRequest.reformedObj = resultObject;
+                tmpRequest.reformedObj = [tmpRequest.objReformerDelegate reformerObject:resultObject andError:netError atRequest:tmpRequest];
             }
             if([tmpRequest.objReformerDelegate respondsToSelector:@selector(modelingFormJSONResponseObject:)]){
                 tmpRequest.modeledResponseObject = [tmpRequest.objReformerDelegate modelingFormJSONResponseObject:resultObject];
-            }else{
-                tmpRequest.modeledResponseObject = @[];
             }
         }
     }

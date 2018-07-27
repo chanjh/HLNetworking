@@ -103,7 +103,7 @@
         return self;
     };
 }
-// HTTP 请求超时的时间，默认为15秒
+// HTTP 请求超时的时间，默认为30秒
 - (__kindof HLURLRequest *(^)(NSTimeInterval requestTimeoutInterval))setTimeout {
     return ^HLURLRequest* (NSTimeInterval requestTimeoutInterval) {
         self.timeoutInterval = requestTimeoutInterval;

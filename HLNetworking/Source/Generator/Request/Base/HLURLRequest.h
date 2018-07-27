@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (__kindof HLURLRequest *(^)(HLSecurityPolicyConfig *securityPolicy))setSecurityPolicy;
 // HTTP 请求的Cache策略
 - (__kindof HLURLRequest *(^)(NSURLRequestCachePolicy requestCachePolicy))setCachePolicy;
-// HTTP 请求超时的时间，默认为15秒
+// HTTP 请求超时的时间，默认为30秒
 - (__kindof HLURLRequest *(^)(NSTimeInterval requestTimeoutInterval))setTimeout;
 NS_ASSUME_NONNULL_END
 

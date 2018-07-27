@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (HLTaskRequest *(^)(HLSecurityPolicyConfig *securityPolicy))setSecurityPolicy;
 // HTTP 请求的Cache策略
 - (HLTaskRequest *(^)(NSURLRequestCachePolicy requestCachePolicy))setCachePolicy;
-// HTTP 请求超时的时间，默认为15秒
+// HTTP 请求超时的时间，默认为30秒
 - (HLTaskRequest *(^)(NSTimeInterval requestTimeoutInterval))setTimeout;
 /**
  API完成后的成功回调

@@ -66,7 +66,7 @@ HLNetworking整体结构如图所示，是一套基于[AFNetworking 3.1.0](https
 	- **isJudgeVersion**：是否为审核版本，作用于apiVersion，存储在NSUserDefaults中，key为isR，默认为 `NO`
 	- **userAgent**：UserAgent，request header中的UA，默认为 `nil`
 	- **maxHttpConnectionPerHost**：每个Host的最大连接数，默认为 `5`
-	- **requestTimeoutInterval**：请求超时时间，默认为 `15` 秒
+	- **requestTimeoutInterval**：请求超时时间，默认为 `30` 秒
 - **policy**：网络策略相关参数	
 	- **AppGroup**：后台模式所用的GroupID，该选项只对Task有影响，默认为 `nil`
 	- **isBackgroundSession**：是否为后台模式，该选项只对Task有影响，默认为 `NO`

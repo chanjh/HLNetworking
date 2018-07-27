@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 // 默认的请求超时时间
-#define HL_API_REQUEST_TIME_OUT     15
+#define HL_API_REQUEST_TIME_OUT     30
 
 // 每个host最大连接数
 #define MAX_HTTP_CONNECTION_PER_HOST 5
@@ -41,7 +41,7 @@
 // 网络状态不好时自动重试次数，默认为0
 @property (nonatomic, assign) NSUInteger retryCount;
 
-// 请求超时时间，默认为15秒
+// 请求超时时间，默认为30秒
 @property (nonatomic, assign) NSTimeInterval requestTimeoutInterval;
 
 // 获取当前版本
