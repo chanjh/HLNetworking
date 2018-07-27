@@ -401,7 +401,8 @@ static dispatch_queue_t qkhl_network_task_queue() {
         tmpRequest.modeledResponseObject = @[];
         if (tmpRequest.objReformerDelegate && resultObject) { // resultObject 为空时，不会经过 reformer
             if([tmpRequest.objReformerDelegate respondsToSelector:@selector(reformerObject:andError:atRequest:)]){
-                tmpRequest.reformedObj = [tmpRequest.objReformerDelegate reformerObject:resultObject andError:netError atRequest:tmpRequest];
+                resultObject = [tmpRequest.objReformerDelegate reformerObject:resultObject andError:netError atRequest:tmpRequest];
+                tmpRequest.reformedObj = resultObject;
             }
             if([tmpRequest.objReformerDelegate respondsToSelector:@selector(modelingFormJSONResponseObject:)]){
                 tmpRequest.modeledResponseObject = [tmpRequest.objReformerDelegate modelingFormJSONResponseObject:resultObject];
