@@ -12,6 +12,12 @@
 @class HLDebugMessage;
 @class HLURLRequest;
 
+typedef NS_ENUM(NSUInteger, HLRequestStatus) {
+    HLRequestStatusNotKnown = 0,
+    HLRequestStatusSuccess,
+    HLRequestStatusFailure,
+};
+
 // 网络请求类型
 typedef NS_ENUM(NSUInteger, HLRequestTaskType) {
     Upload = 16,

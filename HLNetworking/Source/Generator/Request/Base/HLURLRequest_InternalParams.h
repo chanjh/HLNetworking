@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign)NSTimeInterval timeoutInterval;
 @property (nonatomic, assign)NSURLRequestCachePolicy cachePolicy;
 @property (nonatomic, strong)HLSecurityPolicyConfig *securityPolicy;
+@property (nonatomic, assign) HLRequestStatus status;
 
 @property (nonatomic, copy, nullable) HLSuccessBlock successHandler;
 @property (nonatomic, copy, nullable) HLFailureBlock failureHandler;

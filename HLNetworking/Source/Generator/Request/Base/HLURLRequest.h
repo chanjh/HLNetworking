@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *baseURL;
 @property (nonatomic, copy, readonly) NSString *path;
 @property (nonatomic, copy, nullable, getter=customURL, readonly) NSString *cURL;
+@property (nonatomic, assign, readonly) HLRequestStatus status;
 
 #pragma mark - initialize method
 // 请使用API

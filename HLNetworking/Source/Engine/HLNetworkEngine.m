@@ -212,6 +212,7 @@
         @hl_weakify(self)
         void (^successBlock)(NSURLSessionDataTask *task, id responseObject)
         = ^(NSURLSessionDataTask * task, id resultObject) {
+            api.status = HLRequestStatusSuccess;
             // 移除dataTask缓存
             @hl_strongify(self)
             if (callBack) {
@@ -223,6 +224,7 @@
         // task失败Block
         void (^failureBlock)(NSURLSessionDataTask * task, NSError * error)
         = ^(NSURLSessionDataTask * task, NSError * error) {
+            api.status = HLRequestStatusFailure;
             // 移除dataTask缓存
             @hl_strongify(self)
             if (callBack) {
@@ -232,6 +234,7 @@
         };
         
         // 执行AFN的请求
+        api.status = HLRequestStatusNotKnown;
         NSURLSessionDataTask *dataTask;
         switch (api.requestMethodType) {
             case GET: {
@@ -344,6 +347,7 @@
         // 上传完成的Block
         void (^uploadCompleteBlock)(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error)
         = ^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+            task.status = error?HLRequestStatusFailure:HLRequestStatusSuccess;
             @hl_strongify(self);
             if (callBack) {
                 callBack(task, responseObject, error);
@@ -354,6 +358,7 @@
         // 下载完成的Block
         void (^donwloadCompleteBlcok)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error)
         = ^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+            task.status = error?HLRequestStatusFailure:HLRequestStatusSuccess;
             @hl_strongify(self);
             if (callBack) {
                 callBack(task, filePath, error);
@@ -361,6 +366,7 @@
             [self removeTaskForKey:task.hashKey];
         };
         
+        task.status = HLRequestStatusNotKnown;
         NSURLSessionTask *sessionTask;
         switch (task.requestTaskType) {
             case Upload: {
