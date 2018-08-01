@@ -107,16 +107,9 @@
         return;
     }
     
-    // 如果缓存中已有当前task，则立即使api返回失败回调，错误信息为frequentRequestErrorStr
-//    if ([self.sessionTasksCache objectForKey:[requestObject hashKey]]) {
-//        [self faultTolerantProcessWithBlock:callBack
-//                           andRequestObject:requestObject
-//                               andErrorCode:NSURLErrorCancelled
-//                        andErrorDescription:config.tips.frequentRequestErrorStr];
-//        return;
-//    }
+    // 如果缓存中已有当前task，则原有的那个 api block 不会被调用，使用新的 block，继续原来的请求
     if ([self.sessionTasksList containsObject:requestObject]){
-        
+        return;
     }
     
     /** 必要参数 */

@@ -55,15 +55,15 @@
 }
 
 #pragma mark - helper
-- (NSUInteger)hash {
-    NSString *hashStr;
-    if (self.customURL) {
-        hashStr = self.customURL;
-    } else {
-        hashStr = [NSString stringWithFormat:@"%@/%@", self.baseURL, self.path];
-    }
-    return [hashStr hash];
-}
+//- (NSUInteger)hash {
+//    NSString *hashStr;
+//    if (self.customURL) {
+//        hashStr = self.customURL;
+//    } else {
+//        hashStr = [NSString stringWithFormat:@"%@/%@", self.baseURL, self.path];
+//    }
+//    return [hashStr hash];
+//}
 - (NSString *)description {
     NSMutableString *desc = [NSMutableString string];
 #if DEBUG

@@ -216,18 +216,18 @@
 - (NSString *)hashKey {
     return [NSString stringWithFormat:@"%lu", (unsigned long)[self hash]];
 }
-- (NSUInteger)hash {
-    NSString *hashStr = nil;
-    if (self.customURL) {
-        hashStr = [NSString stringWithFormat:@"%@",
-                   self.customURL];
-    } else {
-        hashStr = [NSString stringWithFormat:@"%@/%@",
-                   self.baseURL,
-                   self.path];
-    }
-    return [hashStr hash];
-}
+//- (NSUInteger)hash {
+//    NSString *hashStr = nil;
+//    if (self.customURL) {
+//        hashStr = [NSString stringWithFormat:@"%@",
+//                   self.customURL];
+//    } else {
+//        hashStr = [NSString stringWithFormat:@"%@/%@",
+//                   self.baseURL,
+//                   self.path];
+//    }
+//    return [hashStr hash];
+//}
 - (BOOL)isEqualToRequest:(HLURLRequest *)request {
     return [self hash] == [request hash];
 }

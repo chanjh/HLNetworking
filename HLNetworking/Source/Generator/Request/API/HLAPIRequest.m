@@ -151,24 +151,24 @@
 }
 
 #pragma mark - helper
-- (NSUInteger)hash {
-    NSString *hashStr = nil;
-    if (self.customURL) {
-        hashStr = [NSString stringWithFormat:@"%@%@?%@?%lu",
-                   self.header,
-                   self.customURL,
-                   self.parameters,
-                   (unsigned long)self.requestMethodType];
-    } else {
-        hashStr = [NSString stringWithFormat:@"%@%@/%@?%@?%lu",
-                   self.header,
-                   self.baseURL,
-                   self.path,
-                   self.parameters,
-                   (unsigned long)self.requestMethodType];
-    }
-    return [hashStr hash];
-}
+//- (NSUInteger)hash {
+//    NSString *hashStr = nil;
+//    if (self.customURL) {
+//        hashStr = [NSString stringWithFormat:@"%@%@?%@?%lu",
+//                   self.header,
+//                   self.customURL,
+//                   self.parameters,
+//                   (unsigned long)self.requestMethodType];
+//    } else {
+//        hashStr = [NSString stringWithFormat:@"%@%@/%@?%@?%lu",
+//                   self.header,
+//                   self.baseURL,
+//                   self.path,
+//                   self.parameters,
+//                   (unsigned long)self.requestMethodType];
+//    }
+//    return [hashStr hash];
+//}
 // 拼接打印信息
 - (NSString *)description {
     NSMutableString *desc = [NSMutableString string];
