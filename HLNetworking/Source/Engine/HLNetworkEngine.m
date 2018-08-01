@@ -21,7 +21,7 @@
     dispatch_semaphore_t _lock;
 }
 @property (nonatomic, strong) NSMutableDictionary <NSString *, __kindof AFURLSessionManager *>*sessionManagerCache;
-@property (nonatomic, strong) NSMutableDictionary <NSString *, __kindof NSURLSessionTask *>*sessionTasksCache;
+@property (nonatomic, strong) NSMutableArray <__kindof HLURLRequest *> *sessionTasksList;
 @property (nonatomic, strong) NSMutableDictionary <NSNumber *, NSString *>*resumePathCache;
 @property (nonatomic, strong) NSMutableDictionary <NSString *, AFNetworkReachabilityManager *> *reachabilities;
 @end
@@ -33,7 +33,7 @@
         _lock = dispatch_semaphore_create(1);
         _reachabilities = [NSMutableDictionary dictionary];
         _sessionManagerCache = [NSMutableDictionary dictionary];
-        _sessionTasksCache = [NSMutableDictionary dictionary];
+        _sessionTasksList = [NSMutableArray array];
         _resumePathCache = [NSMutableDictionary dictionary];
     }
     return self;
@@ -84,10 +84,10 @@
 }
 
 #pragma mark - 移除sessionTask
-- (void)removeTaskForKey:(NSString *)hashKey {
+- (void)removeRequest:(__kindof HLURLRequest *)request{
     HLLock();
-    if ([self.sessionTasksCache objectForKey:hashKey]) {
-        [self.sessionTasksCache removeObjectForKey:hashKey];
+    if ([self.sessionTasksList containsObject:request]){
+        [self.sessionTasksList removeObject:request];
     }
     HLUnlock();
 }
@@ -108,12 +108,15 @@
     }
     
     // 如果缓存中已有当前task，则立即使api返回失败回调，错误信息为frequentRequestErrorStr
-    if ([self.sessionTasksCache objectForKey:[requestObject hashKey]]) {
-        [self faultTolerantProcessWithBlock:callBack
-                           andRequestObject:requestObject
-                               andErrorCode:NSURLErrorCancelled
-                        andErrorDescription:config.tips.frequentRequestErrorStr];
-        return;
+//    if ([self.sessionTasksCache objectForKey:[requestObject hashKey]]) {
+//        [self faultTolerantProcessWithBlock:callBack
+//                           andRequestObject:requestObject
+//                               andErrorCode:NSURLErrorCancelled
+//                        andErrorDescription:config.tips.frequentRequestErrorStr];
+//        return;
+//    }
+    if ([self.sessionTasksList containsObject:requestObject]){
+        
     }
     
     /** 必要参数 */
@@ -218,7 +221,7 @@
             if (callBack) {
                 callBack(api, resultObject, nil);
             }
-            [self removeTaskForKey:api.hashKey];
+            [self removeRequest:api];
         };
         
         // task失败Block
@@ -230,7 +233,7 @@
             if (callBack) {
                 callBack(api, nil, error);
             }
-            [self removeTaskForKey:api.hashKey];
+            [self removeRequest:api];
         };
         
         // 执行AFN的请求
@@ -320,7 +323,8 @@
         // 缓存dataTask
         if (dataTask) {
             HLLock();
-            self.sessionTasksCache[api.hashKey] = dataTask;
+            api.sessionTask = dataTask;
+            [self.sessionTasksList addObject:api];
             HLUnlock();
         }
         
@@ -352,7 +356,7 @@
             if (callBack) {
                 callBack(task, responseObject, error);
             }
-            [self removeTaskForKey:task.hashKey];
+            [self removeRequest:task];
         };
         
         // 下载完成的Block
@@ -363,7 +367,7 @@
             if (callBack) {
                 callBack(task, filePath, error);
             }
-            [self removeTaskForKey:task.hashKey];
+            [self removeRequest:task];
         };
         
         task.status = HLRequestStatusNotKnown;
@@ -402,17 +406,17 @@
         if (sessionTask) {
             [sessionTask resume];
             HLLock();
-            self.sessionTasksCache[task.hashKey] = sessionTask;
+            task.sessionTask = sessionTask;
+            [self.sessionTasksList addObject:task];
             HLUnlock();
         }
     } else {
         return;
     }
 }
-
-- (void)cancelRequestByIdentifier:(NSString *)identifier {
-    NSURLSessionTask *sessionTask = [self.sessionTasksCache objectForKey:identifier];
-    if (sessionTask) {
+- (void)cancelRequest:(__kindof HLURLRequest *)request{
+    if([self.sessionTasksList containsObject:request]){
+        NSURLSessionTask *sessionTask = request.sessionTask;
         HLLock();
         if ([sessionTask isKindOfClass:[NSURLSessionDownloadTask class]]) {
             NSURLSessionDownloadTask * downloadTask = (NSURLSessionDownloadTask *)sessionTask;
@@ -421,14 +425,17 @@
             }];
         } else {
             [sessionTask cancel];
-            [self.sessionTasksCache removeObjectForKey:identifier];
+            [self.sessionTasksList removeObject:request];
         }
         HLUnlock();
     }
 }
-
-- (__kindof NSURLSessionTask *)requestByIdentifier:(NSString *)identifier {
-    return [self.sessionTasksCache objectForKey:identifier] ?: nil;
+- (__kindof NSURLSessionTask *)taskByRequest:(__kindof HLURLRequest *)request{
+    if(request){
+        return request.sessionTask;
+    }else{
+        return NULL;
+    }
 }
 
 - (void)listeningWithDomain:(NSString *)domain listeningBlock:(HLReachabilityBlock)listener {

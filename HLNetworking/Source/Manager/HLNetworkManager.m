@@ -157,7 +157,7 @@ static dispatch_queue_t qkhl_network_task_queue() {
         }
     }
     dispatch_async(request.queue, ^{
-        [[HLNetworkEngine sharedEngine] cancelRequestByIdentifier:request.hashKey];
+        [[HLNetworkEngine sharedEngine] cancelRequest:request];
     });
 }
 + (void)cancel:(__kindof HLURLRequest *)request {
@@ -185,7 +185,7 @@ static dispatch_queue_t qkhl_network_task_queue() {
     }
     dispatch_async(request.queue, ^{
         @hl_strongify(self);
-        NSURLSessionTask *sessionTask = [[HLNetworkEngine sharedEngine] requestByIdentifier:request.hashKey];
+        NSURLSessionTask *sessionTask = [[HLNetworkEngine sharedEngine] taskByRequest:request];
         if (sessionTask) {
             [sessionTask resume];
         } else {
@@ -206,7 +206,7 @@ static dispatch_queue_t qkhl_network_task_queue() {
         }
     }
     dispatch_async(request.queue, ^{
-        NSURLSessionTask *sessionTask = [[HLNetworkEngine sharedEngine] requestByIdentifier:request.hashKey];
+        NSURLSessionTask *sessionTask = [[HLNetworkEngine sharedEngine] taskByRequest:request];
         if (sessionTask) {
             [sessionTask suspend];
         }

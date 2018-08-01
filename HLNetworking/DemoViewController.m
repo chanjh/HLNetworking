@@ -19,6 +19,8 @@
     [super viewDidLoad];
     GithubSearchAPI *api = [[GithubSearchAPI alloc]initWithSearchKey:@"photo" type:GithubSearchTypeRepositories];
     [api startWithSuccessHandler:^(__kindof HLURLRequest *request, id  _Nullable responseObj) {
+        NSLog(@"Request: %@", request);
+        NSLog(@"Response: %@", responseObj);
         HLAPIRequest *api = (HLAPIRequest *)request;
         NSLog(@"ReformedObj: %@", api.reformedObj);
     } failureHandler:^(__kindof HLURLRequest *request, NSError * _Nullable error) {

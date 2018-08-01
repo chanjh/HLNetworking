@@ -26,10 +26,10 @@
            callBack:(HLCallbackBlock _Nullable)callBack;
 
 // 取消请求
-- (void)cancelRequestByIdentifier:(NSString * _Nonnull)identifier;
+- (void)cancelRequest:(__kindof HLURLRequest *)request;
 
 // 如果task不存在则返回NSNull对象
-- (__kindof NSURLSessionTask * _Nullable)requestByIdentifier:(NSString * _Nonnull)identifier;
+- (__kindof NSURLSessionTask *)taskByRequest:(__kindof HLURLRequest *)request;
 
 #pragma mark - reachability相关
 // 开始监听，domain为需要监听的域名
