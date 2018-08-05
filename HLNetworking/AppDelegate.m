@@ -21,6 +21,14 @@
     [[HLNetworkManager sharedManager] setupConfig:^(HLNetworkConfig * _Nonnull config) {
         config.request.baseURL = @"https://api.github.com";
     }];
+    dispatch_queue_t queue = dispatch_queue_create("com.sou-yun.queue.font_download", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), queue, ^{
+        if([HLNetworkManager reachabilityStatus] != HLReachabilityStatusReachableViaWiFi){
+            
+        }else{
+            
+        }
+    });
     return YES;
 }
 

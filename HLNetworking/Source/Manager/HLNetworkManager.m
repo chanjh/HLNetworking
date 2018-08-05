@@ -250,7 +250,11 @@ static dispatch_queue_t qkhl_network_task_queue() {
 }
 
 + (HLReachabilityStatus)reachabilityStatus {
-    return [[self sharedManager] reachabilityStatus];
+    HLReachabilityStatus status = [[self sharedManager] reachabilityStatus];
+    if(!status || status == HLReachabilityStatusUnknown){
+        return [[HLNetworkEngine sharedEngine] reachabilityStatusForDomain:[[self sharedManager] config].request.baseURL];
+    }
+    return status;
 }
 
 + (BOOL)isReachable {

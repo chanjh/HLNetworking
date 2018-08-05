@@ -32,6 +32,7 @@
 - (__kindof NSURLSessionTask *)taskByRequest:(__kindof HLURLRequest *)request;
 
 #pragma mark - reachability相关
+- (HLReachabilityStatus)reachabilityStatusForDomain:(NSString *)domain;
 // 开始监听，domain为需要监听的域名
 - (void)listeningWithDomain:(NSString * _Nonnull)domain listeningBlock:(HLReachabilityBlock _Nonnull)listener;
 // 停止监听，domain为需要停止的域名

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D5F5D60211731E900B06B73 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5F5D5E211731E900B06B73 /* Reachability.m */; };
 		0D71B6BC21084D49007E68BA /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D71B6BB21084D49007E68BA /* DemoViewController.m */; };
 		0D71B6BF210859E9007E68BA /* GithubSearchAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D71B6BE210859E9007E68BA /* GithubSearchAPI.m */; };
 		CA11CB6F72D47813F2CFB2E5 /* libPods-HLNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A78D7A6A24AB5E8E2123F3 /* libPods-HLNetworking.a */; };
@@ -59,6 +60,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D5F5D5E211731E900B06B73 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		0D5F5D5F211731E900B06B73 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		0D71B6BA21084D49007E68BA /* DemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
 		0D71B6BB21084D49007E68BA /* DemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		0D71B6BD210859E9007E68BA /* GithubSearchAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GithubSearchAPI.h; sourceTree = "<group>"; };
@@ -165,6 +168,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D5F5D5D211731E900B06B73 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				0D5F5D5E211731E900B06B73 /* Reachability.m */,
+				0D5F5D5F211731E900B06B73 /* Reachability.h */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 		0D71B6C321085D0F007E68BA /* Api */ = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +333,7 @@
 		CF6BAB181E35DC37003ECA28 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				0D5F5D5D211731E900B06B73 /* Reachability */,
 				CF6BAB191E35DC37003ECA28 /* HLNetworkEngine.h */,
 				CF6BAB1A1E35DC37003ECA28 /* HLNetworkEngine.m */,
 			);
@@ -607,6 +620,7 @@
 				CF5C956E1E1A351600A3380C /* HLNetworkPolicyConfig.m in Sources */,
 				CF3627551D9368BD00C26AAF /* ViewController.m in Sources */,
 				CF5C956B1E1A342000A3380C /* HLNetworkRequestConfig.m in Sources */,
+				0D5F5D60211731E900B06B73 /* Reachability.m in Sources */,
 				CF7005A11E1CA12200DF8E80 /* HLNetworkLogger.m in Sources */,
 				CF6BAB1B1E35DC37003ECA28 /* HLNetworkEngine.m in Sources */,
 				CF7005A41E1CDADD00DF8E80 /* HLNetworkLoggerConfig.m in Sources */,

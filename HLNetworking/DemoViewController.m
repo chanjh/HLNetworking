@@ -8,6 +8,7 @@
 
 #import "DemoViewController.h"
 #import "GithubSearchAPI.h"
+#import "HLNetworkManager.h"
 
 @interface DemoViewController ()
 

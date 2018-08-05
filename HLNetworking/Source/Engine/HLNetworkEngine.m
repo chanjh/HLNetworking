@@ -8,6 +8,7 @@
 
 #import <AFNetworking/AFHTTPSessionManager.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
+#import "Reachability/Reachability.h"
 
 #import "HLNetworkEngine.h"
 #import "HLNetworkMacro.h"
@@ -429,6 +430,26 @@
     }else{
         return NULL;
     }
+}
+
+- (HLReachabilityStatus)reachabilityStatusForDomain:(NSString *)domain{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus status = reachability.currentReachabilityStatus;
+    HLReachabilityStatus curStatus = HLReachabilityStatusUnknown;
+    switch (status) {
+        case NotReachable:
+            curStatus = HLReachabilityStatusNotReachable;
+            break;
+        case ReachableViaWiFi:
+            curStatus = HLReachabilityStatusReachableViaWiFi;
+            break;
+        case ReachableViaWWAN:
+            curStatus = HLReachabilityStatusReachableViaWWAN;
+            break;
+        default:
+            break;
+    }
+    return curStatus;
 }
 
 - (void)listeningWithDomain:(NSString *)domain listeningBlock:(HLReachabilityBlock)listener {
