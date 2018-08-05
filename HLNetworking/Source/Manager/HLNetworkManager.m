@@ -304,7 +304,9 @@ static dispatch_queue_t qkhl_network_task_queue() {
     }
     
     if (self.config.tips.isNetworkingActivityIndicatorEnabled) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        });
     }
     
     // 定义进度block
@@ -326,7 +328,9 @@ static dispatch_queue_t qkhl_network_task_queue() {
     = ^(HLURLRequest *request, id responseObject, NSError *error) {
         @hl_strongify(self)
         if (self.config.tips.isNetworkingActivityIndicatorEnabled) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            });
         }
         [self callbackWithRequest:request
                   andResultObject:responseObject
