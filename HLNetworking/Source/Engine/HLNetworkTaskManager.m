@@ -34,6 +34,9 @@
     NSString *key = [request hashKey];
     if([self.requestRecord.allKeys containsObject:key]){
         for(HLURLRequest *requestObj in self.requestRecord[key]){
+            if([request isEqual:requestObj]){
+                continue;
+            }
             requestObj.progressHandler(requestObj, progress);
         }
     }
