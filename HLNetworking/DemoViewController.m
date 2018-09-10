@@ -18,6 +18,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+
     GithubSearchAPI *api = [[GithubSearchAPI alloc]initWithSearchKey:@"photo" type:GithubSearchTypeRepositories];
     [api startWithSuccessHandler:^(__kindof HLURLRequest *request, id  _Nullable responseObj) {
         NSLog(@"Request: %@", request);
@@ -35,8 +39,6 @@
     GithubSearchAPI *api2 = [[GithubSearchAPI alloc]initWithSearchKey:@"photo" type:GithubSearchTypeRepositories];
     [api2 startWithSuccessHandler:^(__kindof HLURLRequest *request, id  _Nullable responseObj) {
         NSLog(@";;;");
-        
-        
     } failureHandler:^(__kindof HLURLRequest *request, NSError * _Nullable error) {
         NSLog(@"Error: %@", error);
     }];

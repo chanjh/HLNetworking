@@ -214,7 +214,16 @@
     return dict;
 }
 - (NSString *)hashKey {
-    return [NSString stringWithFormat:@"%lu", (unsigned long)[self hash]];
+    NSString *hashStr = nil;
+    if (self.customURL) {
+        hashStr = [NSString stringWithFormat:@"%@",
+                   self.customURL];
+    } else {
+        hashStr = [NSString stringWithFormat:@"%@/%@",
+                   self.baseURL,
+                   self.path];
+    }
+    return hashStr;
 }
 //- (NSUInteger)hash {
 //    NSString *hashStr = nil;

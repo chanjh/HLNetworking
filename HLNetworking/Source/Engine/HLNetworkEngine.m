@@ -14,6 +14,7 @@
 #import "HLNetworkMacro.h"
 #import "HLNetworkConst.h"
 #import "HLNetworkConfig.h"
+#import "HLNetworkTaskManager.h"
 #import "HLURLRequest_InternalParams.h"
 #import "HLAPIRequest_InternalParams.h"
 #import "HLTaskRequest_InternalParams.h"
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) NSMutableArray <__kindof HLURLRequest *> *sessionTasksList;
 @property (nonatomic, strong) NSMutableDictionary <NSNumber *, NSString *>*resumePathCache;
 @property (nonatomic, strong) NSMutableDictionary <NSString *, AFNetworkReachabilityManager *> *reachabilities;
+@property (nonatomic, strong) HLNetworkTaskManager *taskManager;
 @end
 
 @implementation HLNetworkEngine
@@ -36,6 +38,7 @@
         _sessionManagerCache = [NSMutableDictionary dictionary];
         _sessionTasksList = [NSMutableArray array];
         _resumePathCache = [NSMutableDictionary dictionary];
+        _taskManager = [[HLNetworkTaskManager alloc]init];
     }
     return self;
 }
@@ -85,7 +88,7 @@
 }
 
 #pragma mark - 移除sessionTask
-- (void)removeRequest:(__kindof HLURLRequest *)request{
+- (void)removeSessionTaskForRequest:(__kindof HLURLRequest *)request{
     HLLock();
     if ([self.sessionTasksList containsObject:request]){
         [self.sessionTasksList removeObject:request];
@@ -108,10 +111,7 @@
         return;
     }
     
-    // 如果缓存中已有当前task，则原有的那个 api block 不会被调用，使用新的 block，继续原来的请求
-    if ([self.sessionTasksList containsObject:requestObject]){
-        return;
-    }
+    BOOL isExist = [self.taskManager addRequest:requestObject];
     
     /** 必要参数 */
     /** 生成sessionManager */
@@ -191,7 +191,7 @@
             }
         });
     };
-    
+    if(isExist) return;
     /** 根据requestObject类型，发送请求 */
     // requestObject为HLAPI时
     if ([requestObject isKindOfClass:[HLAPIRequest class]]) {
@@ -215,7 +215,7 @@
             if (callBack) {
                 callBack(api, resultObject, nil);
             }
-            [self removeRequest:api];
+            [self removeSessionTaskForRequest:api];
         };
         
         // task失败Block
@@ -227,7 +227,7 @@
             if (callBack) {
                 callBack(api, nil, error);
             }
-            [self removeRequest:api];
+            [self removeSessionTaskForRequest:api];
         };
         
         // 执行AFN的请求
@@ -350,7 +350,7 @@
             if (callBack) {
                 callBack(task, responseObject, error);
             }
-            [self removeRequest:task];
+            [self removeSessionTaskForRequest:task];
         };
         
         // 下载完成的Block
@@ -361,7 +361,7 @@
             if (callBack) {
                 callBack(task, filePath, error);
             }
-            [self removeRequest:task];
+            [self removeSessionTaskForRequest:task];
         };
         
         task.status = HLRequestStatusNotKnown;
@@ -421,6 +421,7 @@
             [sessionTask cancel];
             [self.sessionTasksList removeObject:request];
         }
+        [self.taskManager cancelForRequest:request];
         HLUnlock();
     }
 }
