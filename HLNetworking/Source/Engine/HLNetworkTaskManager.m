@@ -31,13 +31,16 @@
 }
 
 - (void)requestProgress:(nullable NSProgress *)progress atRequest:(nullable __kindof HLURLRequest *)request{
+    if(![request isKindOfClass:[HLTaskRequest class]]){
+        return;
+    }
     NSString *key = [request hashKey];
     if([self.requestRecord.allKeys containsObject:key]){
         for(HLURLRequest *requestObj in self.requestRecord[key]){
             if([request isEqual:requestObj]){
                 continue;
             }
-            requestObj.progressHandler(requestObj, progress);
+            requestObj.progressHandler(request, progress);
         }
     }
 }
@@ -54,10 +57,10 @@
             if([requestObj isKindOfClass:HLAPIRequest.class]){
                 HLAPIRequest *apiRequest = (HLAPIRequest *)requestObj;
                 if([apiRequest.objReformerDelegate respondsToSelector:@selector(modelingFormJSONResponseObject:)]){
-                    [apiRequest.objReformerDelegate modelingFormJSONResponseObject:responseObject];
+                    [apiRequest.objReformerDelegate modelingFormJSONResponseObject:apiRequest.rawResponseObj];
                 }
                 if([apiRequest.objReformerDelegate respondsToSelector:@selector(reformerObject:andError:atRequest:)]){
-                    [apiRequest.objReformerDelegate reformerObject:responseObject andError:nil atRequest:apiRequest];
+                    [apiRequest.objReformerDelegate reformerObject:apiRequest.rawResponseObj andError:nil atRequest:apiRequest];
                 }
             }
             // Task Request
