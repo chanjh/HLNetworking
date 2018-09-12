@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - initialize method
 // 请使用API
 + (instancetype)request;
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init;
 + (instancetype)new NS_UNAVAILABLE;
 
 #pragma mark - parameters append method
