@@ -76,12 +76,13 @@
     NSString *key = [request hashKey];
     if([self.requestRecord.allKeys containsObject:key]){
         for(HLURLRequest *requestObj in self.requestRecord[key]){
+            if([request isEqual:requestObj]){
+                continue;
+            }
             requestObj.failureHandler(requestObj, error);
-            // APIRequest
             if([requestObj isKindOfClass:HLAPIRequest.class]){
                 // TODO
             }
-            // Task Request
             if([requestObj isKindOfClass:HLTaskRequest.class]){
                 // TODO
             }
