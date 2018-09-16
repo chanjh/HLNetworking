@@ -13,11 +13,14 @@
 #import "HLAPIRequest.h"
 #import "HLAPIRequest_InternalParams.h"
 #import "HLTaskRequest.h"
+#import "HLNetworkMacro.h"
 @interface HLNetworkTaskManager()<HLNetworkResponseDelegate, HLURLRequestDelegate>
 @property (nonatomic, strong) NSMutableDictionary *requestRecord;
 @property (nonatomic, strong) NSMutableArray *requestList;
 @end
-@implementation HLNetworkTaskManager
+@implementation HLNetworkTaskManager{
+    dispatch_semaphore_t _lock;
+}
 
 - (instancetype)init{
     if(self = [super init]){
@@ -80,9 +83,11 @@
                 continue;
             }
             requestObj.failureHandler(requestObj, error);
+            // APIRequest
             if([requestObj isKindOfClass:HLAPIRequest.class]){
                 // TODO
             }
+            // Task Request
             if([requestObj isKindOfClass:HLTaskRequest.class]){
                 // TODO
             }
@@ -92,9 +97,11 @@
 }
 
 - (void)cancelForRequest:(HLURLRequest *)request{
+    HLLock();
     if([self.requestList containsObject:request]){
         [self.requestList removeObject:request];
     }
+    HLUnlock();
     NSString *key = [request hashKey];
     if([self.requestRecord valueForKey:key]){
         NSMutableArray *list = [NSMutableArray arrayWithArray:self.requestRecord[key]];
@@ -142,6 +149,19 @@
         }
     }else{
         [self.requestRecord setObject:@[request] forKey:key];
+    }
+    if(result){
+        // request 可能是重试的请求
+        // 同时处理其他几个请求
+        for(HLURLRequest *req in self.requestRecord[key]){
+            if(req == request){
+                continue;
+            }
+            else if(request.retryCount < req.retryCount){
+                result = NO;
+                req.retryCount--;
+            }
+        }
     }
     return result;
 }
