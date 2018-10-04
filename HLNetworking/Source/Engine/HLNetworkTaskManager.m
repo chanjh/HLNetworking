@@ -14,6 +14,7 @@
 #import "HLAPIRequest_InternalParams.h"
 #import "HLTaskRequest.h"
 #import "HLNetworkMacro.h"
+#import "HLNetworkConfig.h"
 @interface HLNetworkTaskManager()<HLNetworkResponseDelegate, HLURLRequestDelegate>
 @property (nonatomic, strong) NSMutableDictionary *requestRecord;
 @property (nonatomic, strong) NSMutableArray *requestList;
@@ -150,7 +151,7 @@
     }else{
         [self.requestRecord setObject:@[request] forKey:key];
     }
-    if(result){
+    if(result && request.retryCount < [HLNetworkManager sharedManager].config.request.retryCount){
         // request 可能是重试的请求
         // 同时处理其他几个请求
         for(HLURLRequest *req in self.requestRecord[key]){
@@ -158,10 +159,11 @@
                 continue;
             }
             else if(request.retryCount < req.retryCount){
-                result = NO;
                 req.retryCount--;
             }
         }
+        // 设置为 NO，让请求再发一次
+        result = NO;
     }
     return result;
 }
