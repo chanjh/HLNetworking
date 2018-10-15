@@ -56,7 +56,6 @@
             if([request isEqual:requestObj]){
                 continue;
             }
-            requestObj.successHandler(requestObj, responseObject);
             // APIRequest
             if([requestObj isKindOfClass:HLAPIRequest.class]){
                 HLAPIRequest *apiRequest = (HLAPIRequest *)requestObj;
@@ -71,6 +70,9 @@
             if([requestObj isKindOfClass:HLTaskRequest.class]){
                 // TODO
             }
+            if(requestObj.successHandler){
+                requestObj.successHandler(requestObj, responseObject);
+            }
         }
         [self removeForKey:key];
     }
@@ -83,7 +85,6 @@
             if([request isEqual:requestObj]){
                 continue;
             }
-            requestObj.failureHandler(requestObj, error);
             // APIRequest
             if([requestObj isKindOfClass:HLAPIRequest.class]){
                 // TODO
@@ -91,6 +92,9 @@
             // Task Request
             if([requestObj isKindOfClass:HLTaskRequest.class]){
                 // TODO
+            }
+            if(requestObj.failureHandler){
+                requestObj.failureHandler(requestObj, error);
             }
         }
         [self removeForKey:key];
