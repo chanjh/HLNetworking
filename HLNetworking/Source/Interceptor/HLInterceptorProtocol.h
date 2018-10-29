@@ -7,14 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-@class HLURLRequest;
+@class HLAPIRequest;
 
 @protocol HLInterceptorProtocol <NSObject>
 
-/**
- * 暂时只支持 HLAPIRequest
- * 但为了 HLNetworkManager 调用时方式，API 暂时这么设计
- */
-- (NSError * _Nullable )interceptErrorForApiRequest:(__kindof HLURLRequest *)request;
+@optional
+- (NSError * _Nullable )interceptErrorForApiRequest:(HLAPIRequest *)request;
+// 出现错误的时候，用于拦截是否要执行这次 Retry
+- (BOOL)needRetryForError:(NSError *)error;
 
 @end

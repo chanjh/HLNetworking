@@ -369,8 +369,12 @@ static dispatch_queue_t qkhl_network_task_queue() {
     // 处理回调的block
     NSError *netError = error;
     if (netError) {
+        BOOL needRetry = YES;
+        if([request.interceptor respondsToSelector:@selector(needRetryForError:)]){
+            needRetry = [request.interceptor needRetryForError:netError];
+        }
         // 网络状态不好时自动重试
-        if (request.retryCount > 0) {
+        if (request.retryCount > 0 && needRetry) {
             request.retryCount --;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [self send:request atSemaphore:semaphore atGroup:group];
@@ -442,8 +446,8 @@ static dispatch_queue_t qkhl_network_task_queue() {
         [HLNetworkLogger addLogInfoWithDictionary:msgDictionary];
     }
     
-    if([request.interceptor respondsToSelector:@selector(interceptErrorForApiRequest:)]){
-        NSError *error = [request.interceptor interceptErrorForApiRequest:request];
+    if([request isKindOfClass:HLAPIRequest.class] && [request.interceptor respondsToSelector:@selector(interceptErrorForApiRequest:)]){
+        NSError *error = [request.interceptor interceptErrorForApiRequest:(HLAPIRequest *)request];
         if(error){
             netError = error;
         }
