@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HLInterceptorProtocol.h"
 // 默认的请求超时时间
 #define HL_API_REQUEST_TIME_OUT     30
 
@@ -14,6 +15,9 @@
 #define MAX_HTTP_CONNECTION_PER_HOST 5
 
 @interface HLNetworkRequestConfig : NSObject<NSCopying>
+// 定义 Interceptor 全局拦截器
+// 用于调用 needRetryForError: forRequest:(HLURLRequest *)request 方法
+@property (nonatomic, strong, nullable) NSObject<HLInterceptorProtocol> *globalInterceptor;
 // API请求的自定义队列
 @property (nonatomic, strong, nullable) dispatch_queue_t callbackQueue;
 

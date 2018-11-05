@@ -7,13 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+@class HLURLRequest;
 @class HLAPIRequest;
 
 @protocol HLInterceptorProtocol <NSObject>
 
 @optional
-- (NSError * _Nullable )interceptErrorForApiRequest:(HLAPIRequest *)request;
 // 出现错误的时候，用于拦截是否要执行这次 Retry
-- (BOOL)needRetryForError:(NSError *)error;
+- (BOOL)needRetryForError:(NSError *)error forRequest:(HLURLRequest *)request;
+
+- (NSError * _Nullable )interceptErrorForApiRequest:(HLAPIRequest *)request
+                                           curError:(NSError * _Nullable)curError;
 
 @end

@@ -370,8 +370,11 @@ static dispatch_queue_t qkhl_network_task_queue() {
     NSError *netError = error;
     if (netError) {
         BOOL needRetry = YES;
-        if([request.interceptor respondsToSelector:@selector(needRetryForError:)]){
-            needRetry = [request.interceptor needRetryForError:netError];
+        if(self.config.request.globalInterceptor && [self.config.request.globalInterceptor respondsToSelector:@selector(needRetryForError:forRequest:)]){
+            needRetry = [self.config.request.globalInterceptor needRetryForError:netError forRequest:request];
+        }
+        if([request.interceptor respondsToSelector:@selector(needRetryForError:forRequest:)]){
+            needRetry = [request.interceptor needRetryForError:netError forRequest:request];
         }
         // 网络状态不好时自动重试
         if (request.retryCount > 0 && needRetry) {
@@ -445,9 +448,16 @@ static dispatch_queue_t qkhl_network_task_queue() {
         }
         [HLNetworkLogger addLogInfoWithDictionary:msgDictionary];
     }
-    
-    if([request isKindOfClass:HLAPIRequest.class] && [request.interceptor respondsToSelector:@selector(interceptErrorForApiRequest:)]){
-        NSError *error = [request.interceptor interceptErrorForApiRequest:(HLAPIRequest *)request];
+    // 全局拦截器
+    if(self.config.request.globalInterceptor && [self.config.request.globalInterceptor  respondsToSelector:@selector(interceptErrorForApiRequest:curError:)]){
+        NSError *error = [self.config.request.globalInterceptor interceptErrorForApiRequest:(HLAPIRequest *)request curError:netError];
+        if(error){
+            netError = error;
+        }
+    }
+    // 自定义拦截器
+    if([request isKindOfClass:HLAPIRequest.class] && [request.interceptor respondsToSelector:@selector(interceptErrorForApiRequest:curError:)]){
+        NSError *error = [request.interceptor interceptErrorForApiRequest:(HLAPIRequest *)request curError:netError];
         if(error){
             netError = error;
         }

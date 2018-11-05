@@ -225,6 +225,13 @@
     }
     return hashStr;
 }
+- (NSInteger)statusCode{
+    if(self.sessionTask.response){
+        return ((NSHTTPURLResponse *)self.sessionTask.response).statusCode;
+    }else{
+        return -1;
+    }
+}
 //- (NSUInteger)hash {
 //    NSString *hashStr = nil;
 //    if (self.customURL) {
