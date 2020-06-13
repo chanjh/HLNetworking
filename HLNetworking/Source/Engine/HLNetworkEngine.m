@@ -238,6 +238,7 @@
                 dataTask =
                 [session GET:requestURLString
                   parameters:requestParams
+                     headers:api.header
                     progress:progressBlock
                      success:successBlock
                      failure:failureBlock];
@@ -247,6 +248,7 @@
                 dataTask =
                 [session DELETE:requestURLString
                      parameters:requestParams
+                        headers:api.header
                         success:successBlock
                         failure:failureBlock];
             }
@@ -255,6 +257,7 @@
                 dataTask =
                 [session PATCH:requestURLString
                     parameters:requestParams
+                       headers:api.header
                        success:successBlock
                        failure:failureBlock];
             }
@@ -263,6 +266,7 @@
                 dataTask =
                 [session PUT:requestURLString
                   parameters:requestParams
+                     headers:api.header
                      success:successBlock
                      failure:failureBlock];
             }
@@ -271,13 +275,14 @@
                 dataTask =
                 [session HEAD:requestURLString
                    parameters:requestParams
+                      headers:api.header
                       success:^(NSURLSessionDataTask * _Nonnull task) {
-                          if (successBlock) {
-                              dispatch_async_main(config.request.callbackQueue, ^{
-                                  successBlock(task, nil);
-                              });
-                          }
-                      }
+                    if (successBlock) {
+                        dispatch_async_main(config.request.callbackQueue, ^{
+                            successBlock(task, nil);
+                        });
+                    }
+                }
                       failure:failureBlock];
             }
                 break;
@@ -286,6 +291,7 @@
                     dataTask =
                     [session POST:requestURLString
                        parameters:requestParams
+                          headers:api.header
                          progress:progressBlock
                           success:successBlock
                           failure:failureBlock];
@@ -296,6 +302,7 @@
                     };
                     dataTask = [session POST:requestURLString
                                   parameters:requestParams
+                                     headers:api.header
                    constructingBodyWithBlock:formDataBlock
                                     progress:progressBlock
                                      success:successBlock
@@ -307,6 +314,7 @@
                 dataTask =
                 [session GET:requestURLString
                   parameters:requestParams
+                     headers:api.header
                     progress:progressBlock
                      success:successBlock
                      failure:failureBlock];
